@@ -30,7 +30,7 @@ Next, I will discuss how the federated learning is implemented to recognize huma
 First and foremost, let's install Tensorflow federated learning package.
 
 
-```
+```python
 # Tensorflow federated package 
 !pip install --upgrade tensorflow_federated > /dev/null 2>&1
 ```
@@ -40,7 +40,7 @@ First and foremost, let's install Tensorflow federated learning package.
 Next, we need to download the dataset to train the computer vision model. Here we use FER2013 dataset in [Challenges in Representation Learning: Facial Expression Recognition Challenge](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) in Kaggle. Therefore, let's configure Kaggle API and download the training dataset.
 
 
-```
+```python
 import os
 
 # Configure kaggle
@@ -95,7 +95,7 @@ os.chdir('data')
 The image dataset downloaded from Kaggle is in ".csv" file format. Therefore, we need to load the "train.csv" file, and convert it to numpy array. The training images and labels are saved in "x_train" and "y_train" respectively.
 
 
-```
+```python
 import csv
 import numpy
 
@@ -146,7 +146,7 @@ print('y_train shape: {0}'.format(y_train.shape))
 Then, let's show one of the images in the dataset. Each image is grey-scale and contains 48 x 48 pixels.
 
 
-```
+```python
 from matplotlib import pyplot as plt
 %matplotlib inline
 
@@ -177,7 +177,7 @@ plt.imshow(image, cmap='gray')
 Next, we need to preprocess and prepare the federated data. Since the training data will be distributed in each user's local device, let's assume we have 3 clients, and each client has 5 images to train, in order to simulate the scenario.
 
 
-```
+```python
 %tensorflow_version 2.x
 import tensorflow as tf
 
@@ -258,7 +258,7 @@ The diagram of the model is displayed as follows.
 Our model contains 5 stacks of layers. In each of the first 4 stacks of layers, there are 2 convolutional layer followed by 1 pooling layer. Besides, we use batch normalization to speed up training and dropout to prevent over-fitting. Then we have one stack of 3 fully-connected layers, followed by a Softmax activation function, which generates the probability of the facial expression categories. Finally, we compile our model using Adam optimizer with a certain learning rate. Considering that we are dealing with classification issue, we will use `sparse_categorical_crossentropy` as the loss function.
 
 
-```
+```python
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, BatchNormalization, MaxPool2D, Dropout, Flatten, Dense
 
@@ -403,7 +403,7 @@ keras_model.summary()
 Next, wrap our compiled Keras model in an instance of the `tff.learning.Model` interface, in order to use the Tensorflow federated learning.
 
 
-```
+```python
 import tensorflow_federated as tff
 
 # Create dummy batch
@@ -427,7 +427,7 @@ def create_federated_model():
 Then, we need to build federated averate process and start training.
 
 
-```
+```python
 # Build federated average process
 trainer = tff.learning.build_federated_averaging_process(create_federated_model)
 
@@ -465,7 +465,7 @@ train_state = trainer.initialize()
 
 
 
-```
+```python
 # Train on federated model
 print('========== Train on Local Device of Client 1 ==========')
 
@@ -511,7 +511,7 @@ plt.show()
 
 
 
-```
+```python
 # Train on federated model
 print('========== Train on Local Device of Client 2 ==========')
 
@@ -557,7 +557,7 @@ plt.show()
 
 
 
-```
+```python
 # Train on federated model
 print('========== Train on Local Device of Client 3 ==========')
 
@@ -607,7 +607,7 @@ plt.show()
 Last but not least, let's evaluate the model after federated training process.
 
 
-```
+```python
 evaluator = tff.learning.build_federated_evaluation(create_federated_model)
 ```
 
@@ -626,7 +626,7 @@ evaluator = tff.learning.build_federated_evaluation(create_federated_model)
 
 
 
-```
+```python
 test_metrics = evaluator(train_state.model, federated_data_test)
 print(test_metrics)
 ```
