@@ -10,7 +10,7 @@ Recently, I have developed a mobile game, [Best Actor Game](https://apps.apple.c
 
 Federated learning is a decentralized approach which allows the data to be trained locally on user devices (e.g. mobile devices). Specifically, within a large number of user devices, only a fraction of which may be available for training at a given time. Therefore, the available user devices will be used to train the data locally, and compute the update to the shared global model maintained by the server, which will aggregate all the updates from the distributed devices, and compute weight using the `FederatedAveraging` algorithm in the following math formula.
 
-$w_{t+1}=\sum_{k=1}^K \frac{n_{k}}{n}w^{k}_{t+1}$
+<img src="https://latex.codecogs.com/gif.latex?w_{t&plus;1}=\sum_{k=1}^K&space;\frac{n_{k}}{n}w^{k}_{t&plus;1}" title="w_{t+1}=\sum_{k=1}^K \frac{n_{k}}{n}w^{k}_{t+1}" />
 
 Considering that modern smartphones have relatively fast processors (e.g. GPUs), the computation becomes essentially free for the federated learning. Therefore, the communication costs dominate during the federated optimization. Based on the research paper from Google, we may reduce the number of rounds of communication required to train a model in the following ways.
 
