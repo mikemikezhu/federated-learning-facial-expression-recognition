@@ -652,7 +652,7 @@ We may also consider to perform federated learning in distributed devices other 
 
 ## Conclusion
 
-To put it in a nutshell, this document has introduced the concept of federated learning, and the implementation of federated training to create a computer vision model for facial expression recognition.
+To put it in a nutshell, this document has introduced the concept of federated learning, and the implementation of federated training to create a computer vision model for facial expression recognition. The code implementation can be referred to my [GitHub](https://github.com/mikemikezhu/federated-learning-facial-expression-recognition).
 
 ## Reference
 
